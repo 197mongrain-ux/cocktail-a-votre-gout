@@ -56,8 +56,10 @@ export function Pantry() {
       <p style={{ color: "var(--muted)" }}>
         Ce que j&apos;ai sous la main — alcools, fruits, épices et mixeurs.
         On s&apos;en sert pour classer le catalogue et inventer des{" "}
-        <strong>spécialités maison</strong>. Sauvegardé dans{" "}
-        <code>localStorage</code> (<code>pantry-v1</code>).
+        <strong>spécialités maison</strong>. Les puces dorées ★ marquent des{" "}
+        <strong>produits vedettes</strong> québécois (Gin Ungava, Vermouth
+        Kayak, camerise…). Sauvegardé dans <code>localStorage</code> (
+        <code>pantry-v1</code>).
       </p>
 
       {GROUPS.map(({ key, items }) => (
@@ -68,7 +70,7 @@ export function Pantry() {
               <button
                 type="button"
                 key={item.id}
-                className={`choice ${state[key].includes(item.id) ? "selected" : ""}`}
+                className={`choice ${state[key].includes(item.id) ? "selected" : ""} ${item.featuredQc ? "featured-qc" : ""}`}
                 onClick={() => persist(togglePantryItem(state, key, item.id))}
               >
                 {item.label}

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { getRecipeById } from "../data/recipes";
+import { isSaqFeatured } from "../types";
 import { isFavorite, toggleFavorite } from "../lib/favorites";
 import { getSpecialtyById } from "../lib/specialties";
 import { useState } from "react";
@@ -29,6 +30,7 @@ export function RecipeDetail() {
   const isHouse =
     recipe.id.startsWith("specialty-") ||
     recipe.description.toLowerCase().includes("créé pour ton bar");
+  const saq = isSaqFeatured(recipe);
 
   return (
     <section className="recipe-detail">
@@ -43,6 +45,10 @@ export function RecipeDetail() {
         <span className="chip accent">
           {CATEGORY_LABELS[recipe.category] ?? recipe.category}
         </span>
+        {saq && (
+          <span className="chip chip-vedette">Vedette SAQ</span>
+        )}
+        {saq && <span className="chip chip-saq">Inspiré SAQ</span>}
         {isHouse && <span className="chip chip-house">maison</span>}
         <span className="chip">{recipe.abvBand} ABV</span>
         {recipe.tags.map((t) => (

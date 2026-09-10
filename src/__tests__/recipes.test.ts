@@ -76,3 +76,47 @@ describe("recipe seed", () => {
     expect(RECIPES.some((r) => r.category === "specialty")).toBe(true);
   });
 });
+
+describe("SAQ / produits vedettes", () => {
+  it("has at least 12 SAQ-inspired or featured QC recipes", () => {
+    const saq = RECIPES.filter(
+      (r) =>
+        r.featuredQc ||
+        r.source === "saq-inspire" ||
+        r.tags.includes("saq") ||
+        r.tags.includes("vedette"),
+    );
+    expect(saq.length).toBeGreaterThanOrEqual(12);
+  });
+
+  it("includes Québec twist names in Title Case", () => {
+    const names = new Set(RECIPES.map((r) => r.name));
+    for (const n of [
+      "Brise Nordique",
+      "Tom Collins Camerise",
+      "Negroni Blanc d'Ici",
+      "Paloma Nordique",
+      "Manhattan Kayak",
+      "Spritz Haskap",
+    ]) {
+      expect(names.has(n)).toBe(true);
+    }
+  });
+});
+
+describe("recipe name Title Case", () => {
+  it("does not use all-lowercase names", () => {
+    for (const r of RECIPES) {
+      expect(r.name).not.toBe(r.name.toLowerCase());
+      // first alphanumeric char should be uppercase (handles accents)
+      const first = r.name.trim()[0];
+      expect(first).toBe(first.toUpperCase());
+    }
+  });
+
+  it("keeps classic names properly capitalized", () => {
+    expect(getRecipeById("old-fashioned")?.name).toBe("Old Fashioned");
+    expect(getRecipeById("gin-and-tonic")?.name).toBe("Gin and Tonic");
+    expect(getRecipeById("negroni")?.name).toBe("Negroni");
+  });
+});

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { RecipeCard } from "../components/RecipeCard";
-import { RECIPES } from "../data/recipes";
+import { getSaqFeaturedRecipes, RECIPES } from "../data/recipes";
 import { toggleFavorite, isFavorite, loadFavorites } from "../lib/favorites";
 import {
   loadPantry,
@@ -140,6 +140,46 @@ export function Results() {
           <Link to="/pantry">Compléter Mon bar</Link>
         </p>
       )}
+
+
+      <div className="section-saq">
+        <h2>Suggestions SAQ &amp; Produits Vedettes</h2>
+        <p style={{ color: "var(--muted)", marginTop: 0 }}>
+          Classiques SAQ-style et torsions québécoises (Gin Ungava, vermouth
+          d&apos;ici, camerise, sirop d&apos;épinette…).
+        </p>
+        <div className="card-grid" style={{ marginBottom: "0.5rem" }}>
+          {getSaqFeaturedRecipes().map((recipe) => (
+            <RecipeCard
+              key={`saq-${recipe.id}`}
+              recipe={recipe}
+              actions={
+                <>
+                  <Link className="btn" to={`/recipe/${recipe.id}`}>
+                    Voir
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => {
+                      toggleFavorite(recipe.id);
+                      setTick((t) => t + 1);
+                    }}
+                  >
+                    {favs.includes(recipe.id) || isFavorite(recipe.id)
+                      ? "★ Enregistré"
+                      : "☆ Enregistrer"}
+                  </button>
+                </>
+              }
+            />
+          ))}
+        </div>
+        <p className="disclaimer">
+          Non affilié à la SAQ; suggestions inspirées de classiques et de
+          produits disponibles au Québec.
+        </p>
+      </div>
 
       <h2>Catalogue</h2>
       <div className="card-grid">

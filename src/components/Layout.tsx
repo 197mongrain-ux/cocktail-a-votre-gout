@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 const links = [
   { to: "/", label: "Accueil", end: true },
   { to: "/quiz", label: "Quiz" },
-  { to: "/pantry", label: "Mon bar" },
+  { to: "/pantry", label: "Mon Bar" },
   { to: "/results", label: "Résultats" },
   { to: "/favorites", label: "Favoris" },
   { to: "/tip", label: "Pourboire" },
@@ -14,8 +14,12 @@ export function Layout() {
     <div className="app-shell">
       <nav className="nav">
         <div className="brand">
-          <strong>Cocktail à votre goût</strong>
-          <span>Des classiques et des créations, selon vos goûts.</span>
+          <strong className="brand-title">
+            Cocktail <span className="script">à votre goût</span>
+          </strong>
+          <span className="tagline">
+            Des classiques et des créations, selon vos goûts.
+          </span>
         </div>
         <div className="nav-links">
           {links.map((l) => (
@@ -34,7 +38,8 @@ export function Layout() {
       <p className="footer-note">
         MVP éducatif — recettes pour inspiration à la maison. Les pourboires
         créditent le grand livre bac à sable via tip-server (pas de paiements
-        réels, pas de vente d&apos;alcool).
+        réels, pas de vente d&apos;alcool). Non affilié à la SAQ; suggestions
+        inspirées de classiques et de produits disponibles au Québec.
       </p>
     </div>
   );

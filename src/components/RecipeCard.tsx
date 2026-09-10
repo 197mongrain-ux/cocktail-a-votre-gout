@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { RankedRecipe, Recipe } from "../types";
+import { isSaqFeatured } from "../types";
 
 const CATEGORY_LABELS: Record<string, string> = {
   classic: "classique",
@@ -20,6 +21,7 @@ export function RecipeCard({ recipe, ranked, actions, houseBadge }: Props) {
     recipe.id.startsWith("specialty-") ||
     (recipe.category === "specialty" &&
       recipe.description.toLowerCase().includes("créé pour ton bar"));
+  const saq = isSaqFeatured(recipe);
 
   return (
     <article className="card">
@@ -36,6 +38,17 @@ export function RecipeCard({ recipe, ranked, actions, houseBadge }: Props) {
         <span className="chip accent">
           {CATEGORY_LABELS[recipe.category] ?? recipe.category}
         </span>
+        {saq && (
+          <span
+            className="chip chip-vedette"
+            title="Inspiré SAQ — suggestion non affiliée"
+          >
+            Vedette SAQ
+          </span>
+        )}
+        {saq && recipe.tags.includes("saq") && (
+          <span className="chip chip-saq">Inspiré SAQ</span>
+        )}
         {isHouse && <span className="chip chip-house">maison</span>}
         <span className="chip">{recipe.abvBand} ABV</span>
         {ranked?.pantryCoverage && ranked.pantryCoverage.total > 0 && (
@@ -50,11 +63,14 @@ export function RecipeCard({ recipe, ranked, actions, houseBadge }: Props) {
             {ranked.pantryCoverage.label}
           </span>
         )}
-        {recipe.tags.slice(0, 3).map((t) => (
-          <span className="chip" key={t}>
-            {t}
-          </span>
-        ))}
+        {recipe.tags
+          .filter((t) => t !== "saq" && t !== "vedette")
+          .slice(0, 3)
+          .map((t) => (
+            <span className="chip" key={t}>
+              {t}
+            </span>
+          ))}
       </div>
       {ranked && ranked.reasons.length > 0 && (
         <ul className="reasons">

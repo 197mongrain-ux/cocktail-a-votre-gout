@@ -8,6 +8,8 @@ export interface PantryItem {
   /** Normalized tokens used for matching recipe ingredients. */
   tokens: string[];
   group: PantryGroup;
+  /** Optional Québec / SAQ-featured chip highlight. */
+  featuredQc?: boolean;
 }
 
 export const PANTRY_ALCOOLS: PantryItem[] = [
@@ -31,6 +33,11 @@ export const PANTRY_ALCOOLS: PantryItem[] = [
   { id: "coffee-liqueur", label: "Liqueur de café", tokens: ["coffee liqueur", "kahlua", "liqueur de cafe"], group: "alcools" },
   { id: "champagne", label: "Champagne / mousseux", tokens: ["champagne", "prosecco", "sparkling", "mousseux"], group: "alcools" },
   { id: "amaro", label: "Amaro", tokens: ["amaro"], group: "alcools" },
+  { id: "gin-ungava", label: "Gin Ungava", tokens: ["gin ungava", "ungava", "gin"], group: "alcools", featuredQc: true },
+  { id: "vermouth-kayak", label: "Vermouth Kayak", tokens: ["vermouth kayak", "vermouth d'ici", "sweet vermouth", "vermouth"], group: "alcools", featuredQc: true },
+  { id: "km12-erable", label: "Km12 à l'Érable (Distillerie du Fjord)", tokens: ["km12", "distillerie du fjord", "maple gin", "gin erable", "gin"], group: "alcools", featuredQc: true },
+  { id: "cirka", label: "Cirka (vodka / gin)", tokens: ["cirka", "vodka", "gin"], group: "alcools", featuredQc: true },
+  { id: "aperitivo-qc", label: "Aperitivo québécois", tokens: ["aperitivo quebecois", "aperitivo québécois", "aperitivo", "bitter aperitivo"], group: "alcools", featuredQc: true },
 ];
 
 export const PANTRY_FRUITS: PantryItem[] = [
@@ -49,6 +56,7 @@ export const PANTRY_FRUITS: PantryItem[] = [
   { id: "pomme", label: "Pomme", tokens: ["apple", "pomme"], group: "fruits" },
   { id: "concombre", label: "Concombre", tokens: ["cucumber", "concombre"], group: "fruits" },
   { id: "noix-coco", label: "Noix de coco / crème de coco", tokens: ["coconut", "noix de coco", "cream of coconut", "coco"], group: "fruits" },
+  { id: "camerise", label: "Camerise / haskap", tokens: ["camerise", "haskap", "honeyberry"], group: "fruits", featuredQc: true },
 ];
 
 export const PANTRY_EPICES: PantryItem[] = [
@@ -79,6 +87,9 @@ export const PANTRY_AUTRES: PantryItem[] = [
   { id: "jus-cranberry", label: "Jus de canneberge", tokens: ["cranberry", "canneberge"], group: "autres" },
   { id: "blanc-oeuf", label: "Blanc d'œuf", tokens: ["egg white", "blanc d'oeuf", "blanc d'œuf"], group: "autres" },
   { id: "creme", label: "Crème / lait", tokens: ["cream", "creme", "crème", "milk", "lait", "half-and-half"], group: "autres" },
+  { id: "sirop-epinette", label: "Sirop d'épinette", tokens: ["sirop d'épinette", "sirop d'epinette", "spruce syrup", "epinette"], group: "autres", featuredQc: true },
+  { id: "sirop-erable", label: "Sirop d'érable", tokens: ["maple syrup", "sirop d'érable", "sirop d'erable", "maple"], group: "autres", featuredQc: true },
+  { id: "kwe-cocktails", label: "KWE Cocktails (mixer)", tokens: ["kwe", "kwe cocktails", "mixer"], group: "autres", featuredQc: true },
 ];
 
 export const ALL_PANTRY_ITEMS: PantryItem[] = [
@@ -94,3 +105,5 @@ export const GROUP_LABELS: Record<PantryGroup, string> = {
   epices: "Épices & aromates",
   autres: "Amers, sirops & mixeurs",
 };
+
+export const FEATURED_QC_PANTRY: PantryItem[] = ALL_PANTRY_ITEMS.filter((i) => i.featuredQc);

@@ -14,7 +14,9 @@ export type RecipeTag =
   | "smoky"
   | "refreshing"
   | "low-abv"
-  | "no-abv";
+  | "no-abv"
+  | "saq"
+  | "vedette";
 
 export type Allergen = "egg" | "dairy" | "nut" | "gluten";
 
@@ -86,6 +88,10 @@ export interface Recipe {
   garnish: string;
   description: string;
   flavorProfile: FlavorProfile;
+  /** Québec / SAQ-inspired featured suggestion. */
+  featuredQc?: boolean;
+  /** Provenance tip for UI filters (public inspiration only). */
+  source?: "saq-inspire";
 }
 
 export type Strength = 1 | 2 | 3 | 4 | 5; // light → strong
@@ -154,3 +160,13 @@ export const DEFAULT_PREFERENCES: Preferences = {
 
 export const PREFS_STORAGE_KEY = "cocktail-prefs-v2";
 export const FAVORITES_STORAGE_KEY = "cocktail-favorites-v1";
+
+/** True when recipe is part of SAQ / produits vedettes suggestions. */
+export function isSaqFeatured(recipe: Recipe): boolean {
+  return Boolean(
+    recipe.featuredQc ||
+      recipe.source === "saq-inspire" ||
+      recipe.tags.includes("saq") ||
+      recipe.tags.includes("vedette"),
+  );
+}
